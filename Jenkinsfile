@@ -3,7 +3,7 @@ pipeline{
     parameters{
     string(name : 'VERSION',defaultValue : '', description : '')
     choice(name : 'ENV', choices : ['DEV','STG','PROD'], description : '')
-    booleanParam(name : 'SKIP-TESTS', defaultValue : false, description : '')
+    booleanParam(name : 'SKIPTESTS', defaultValue : false, description : '')
     }
 	stages{
     		stage("clean"){
@@ -19,7 +19,7 @@ pipeline{
     		stage("tests"){
     		    when{
     		        expression{
-    		         params.SKIP-TESTS == false
+    		         params.SKIPTESTS == false
     		        }
     		    }
                 			steps{
