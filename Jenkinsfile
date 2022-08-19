@@ -1,11 +1,17 @@
+def gv  // declaring the variable globall to be available in all the stges
 pipeline{
 	agent any
     parameters{
     string(name : 'VERSION',defaultValue : '', description : '')
     choice(name : 'ENV', choices : ['DEV','STG','PROD'], description : '')
-    booleanParam(name : 'SKIPTESTS', defaultValue : false, description : '')
+    booleanParam(name : 'SKIPTESTS', defaultValue : false, description : '') // all these params are available in the imported groovy scripts as well
     }
 	stages{
+			stage("init"){
+				script{
+					gv = load "script.groovy"
+				}
+			}
     		stage("clean"){
     			steps{
     				echo "cleaning project..."
@@ -14,6 +20,10 @@ pipeline{
     		stage("build"){
     			steps{
     				echo "building project..."
+					echo 'calling buildProject from script.groovy'
+					script{
+						gv.buildProject()
+					}
     			}
     		}
     		stage("tests"){
