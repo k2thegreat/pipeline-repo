@@ -1,4 +1,5 @@
-def buildApp() {
+def buildProject() {
+	
     echo "building the application with version - ${params.VERSION}"
 }
 
